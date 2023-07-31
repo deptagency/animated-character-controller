@@ -30,7 +30,7 @@ namespace DEPT.Unity
             ""id"": ""16d0fc2e-ea81-447b-ab43-8f736905ea22"",
             ""actions"": [
                 {
-                    ""name"": ""HorizontalMovement"",
+                    ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""2361cc49-a3aa-42f2-85c7-66fe3b9782d9"",
                     ""expectedControlType"": ""Vector2"",
@@ -65,7 +65,7 @@ namespace DEPT.Unity
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""HorizontalMovement"",
+                    ""action"": ""Movement"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -76,7 +76,7 @@ namespace DEPT.Unity
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""HorizontalMovement"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -87,7 +87,7 @@ namespace DEPT.Unity
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""HorizontalMovement"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -98,7 +98,7 @@ namespace DEPT.Unity
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""HorizontalMovement"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -109,9 +109,20 @@ namespace DEPT.Unity
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""HorizontalMovement"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd1edaaf-1ffd-449f-b0a0-625c25762028"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -126,11 +137,33 @@ namespace DEPT.Unity
                 },
                 {
                     ""name"": """",
+                    ""id"": ""67ad5760-6979-4e22-97e6-063b3ee2a4a6"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""5e71028d-d85e-4da9-9ee5-c61149a17e87"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c31cd079-17ca-4bc0-abc7-ab0d0ffce2b5"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -154,12 +187,23 @@ namespace DEPT.Unity
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Gamepad"",
+            ""bindingGroup"": ""Gamepad"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
             // Basic Locomotion
             m_BasicLocomotion = asset.FindActionMap("Basic Locomotion", throwIfNotFound: true);
-            m_BasicLocomotion_HorizontalMovement = m_BasicLocomotion.FindAction("HorizontalMovement", throwIfNotFound: true);
+            m_BasicLocomotion_Movement = m_BasicLocomotion.FindAction("Movement", throwIfNotFound: true);
             m_BasicLocomotion_Run = m_BasicLocomotion.FindAction("Run", throwIfNotFound: true);
             m_BasicLocomotion_Jump = m_BasicLocomotion.FindAction("Jump", throwIfNotFound: true);
         }
@@ -223,14 +267,14 @@ namespace DEPT.Unity
         // Basic Locomotion
         private readonly InputActionMap m_BasicLocomotion;
         private List<IBasicLocomotionActions> m_BasicLocomotionActionsCallbackInterfaces = new List<IBasicLocomotionActions>();
-        private readonly InputAction m_BasicLocomotion_HorizontalMovement;
+        private readonly InputAction m_BasicLocomotion_Movement;
         private readonly InputAction m_BasicLocomotion_Run;
         private readonly InputAction m_BasicLocomotion_Jump;
         public struct BasicLocomotionActions
         {
             private @PlayerInput m_Wrapper;
             public BasicLocomotionActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-            public InputAction @HorizontalMovement => m_Wrapper.m_BasicLocomotion_HorizontalMovement;
+            public InputAction @Movement => m_Wrapper.m_BasicLocomotion_Movement;
             public InputAction @Run => m_Wrapper.m_BasicLocomotion_Run;
             public InputAction @Jump => m_Wrapper.m_BasicLocomotion_Jump;
             public InputActionMap Get() { return m_Wrapper.m_BasicLocomotion; }
@@ -242,9 +286,9 @@ namespace DEPT.Unity
             {
                 if (instance == null || m_Wrapper.m_BasicLocomotionActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_BasicLocomotionActionsCallbackInterfaces.Add(instance);
-                @HorizontalMovement.started += instance.OnHorizontalMovement;
-                @HorizontalMovement.performed += instance.OnHorizontalMovement;
-                @HorizontalMovement.canceled += instance.OnHorizontalMovement;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
@@ -255,9 +299,9 @@ namespace DEPT.Unity
 
             private void UnregisterCallbacks(IBasicLocomotionActions instance)
             {
-                @HorizontalMovement.started -= instance.OnHorizontalMovement;
-                @HorizontalMovement.performed -= instance.OnHorizontalMovement;
-                @HorizontalMovement.canceled -= instance.OnHorizontalMovement;
+                @Movement.started -= instance.OnMovement;
+                @Movement.performed -= instance.OnMovement;
+                @Movement.canceled -= instance.OnMovement;
                 @Run.started -= instance.OnRun;
                 @Run.performed -= instance.OnRun;
                 @Run.canceled -= instance.OnRun;
@@ -290,9 +334,18 @@ namespace DEPT.Unity
                 return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
             }
         }
+        private int m_GamepadSchemeIndex = -1;
+        public InputControlScheme GamepadScheme
+        {
+            get
+            {
+                if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
+                return asset.controlSchemes[m_GamepadSchemeIndex];
+            }
+        }
         public interface IBasicLocomotionActions
         {
-            void OnHorizontalMovement(InputAction.CallbackContext context);
+            void OnMovement(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
         }
