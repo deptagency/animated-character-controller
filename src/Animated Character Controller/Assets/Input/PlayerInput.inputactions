@@ -6,7 +6,7 @@
             "id": "16d0fc2e-ea81-447b-ab43-8f736905ea22",
             "actions": [
                 {
-                    "name": "HorizontalMovement",
+                    "name": "Movement",
                     "type": "Value",
                     "id": "2361cc49-a3aa-42f2-85c7-66fe3b9782d9",
                     "expectedControlType": "Vector2",
@@ -16,21 +16,21 @@
                 },
                 {
                     "name": "Run",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "f1f3d4af-1e51-4708-afb2-9cda10b57e25",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "92f3d277-f7cf-4767-812f-c5ce265e0a24",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -41,7 +41,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "HorizontalMovement",
+                    "action": "Movement",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -52,7 +52,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "HorizontalMovement",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -63,7 +63,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "HorizontalMovement",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -74,7 +74,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "HorizontalMovement",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -85,7 +85,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "HorizontalMovement",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
