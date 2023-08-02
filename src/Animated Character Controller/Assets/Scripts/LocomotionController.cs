@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using UnityEngine;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 namespace DEPT.Unity
 {
@@ -9,11 +10,12 @@ namespace DEPT.Unity
         private StateMachine<ILocomotionContext> _stateMachine;
         private Vector3 _cumulativeTranslation = Vector3.zero;
         private float _initialStepOffset;
-        private Vector3 _gravity = Physics.gravity;
+        private Vector3 _gravity => Physics.gravity * GravityMultiplier;
 
         [Range(1f, 20f)] public float RotationMultiplier = 10f;
         [Range(0.1f, 5f)] public float GravityMultiplier = 2f;
         [Range(0f, 100f)] public float TerminalVelocity = 50f;
+        [Range(0f, 10f)] public float JumpHeight = 2f;
 
         public bool IsGrounded => _characterController.isGrounded;
         public Vector3 CumulativeVelocity { get; private set; }
@@ -59,7 +61,7 @@ namespace DEPT.Unity
             }
             else
             {
-                CumulativeVelocity = Vector3.ClampMagnitude(CumulativeVelocity + (_gravity * GravityMultiplier * Time.deltaTime), TerminalVelocity);
+                CumulativeVelocity = Vector3.ClampMagnitude(CumulativeVelocity + (_gravity * Time.deltaTime), TerminalVelocity);
             }
 
             _cumulativeTranslation += CumulativeVelocity * Time.deltaTime;
@@ -68,6 +70,13 @@ namespace DEPT.Unity
         public void ApplyVelocity(Vector3 velocity)
         {
             CumulativeVelocity += velocity;
+        }
+
+        public void ApplyJump()
+        {
+            var jumpVelocity = new Vector3(0f, Mathf.Sqrt(JumpHeight * -3f * _gravity.y), 0f);
+
+            ApplyVelocity(jumpVelocity);
         }
 
         public void ApplyInputRotationY()

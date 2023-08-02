@@ -13,5 +13,6 @@ namespace DEPT.Unity
         public void ApplyInputTranslationXZ(float speedMultiplier = 1f);
         public void ApplyRootMotionTranslation();
         public void ApplyInputRotationY();
+        public void ApplyJump();
     }
 }

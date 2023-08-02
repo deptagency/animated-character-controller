@@ -1,4 +1,5 @@
 ﻿using DEPT.Unity;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class GroundedState : State<ILocomotionContext>
 {
@@ -25,6 +26,11 @@ public class GroundedState : State<ILocomotionContext>
         if(!StateMachine.Context.IsGrounded)
         {
             StateMachine.ChangeState<FallingState>();
+        }
+
+        if (StateMachine.Context.Input.Jump)
+        {
+            StateMachine.ChangeState<JumpingState>();
         }
     }
 
