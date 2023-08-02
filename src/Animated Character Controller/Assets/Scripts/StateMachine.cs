@@ -1,6 +1,9 @@
-﻿namespace DEPT.Unity
+﻿using System;
+using UnityEngine;
+
+namespace DEPT.Unity
 {
-    public class StateMachine<TContext>
+    public class StateMachine<TContext> : IDisposable
     {
         private State<TContext> _currentState;
 
@@ -12,24 +15,27 @@
             Context = context;
         }
 
-        public void ChangeState<T>() where T : State<TContext>, new()
+        public void ChangeState<T>() where T : State<TContext>
         {
             if(_currentState?.GetType() != typeof(T))
             {
                 _currentState?.Dispose();
 
                 ElapsedTime = 0f;
-                _currentState = new T
-                {
-                    StateMachine = this
-                };
+
+                _currentState = (T)Activator.CreateInstance(typeof(T), this);
             }
         }
 
-        public virtual void Update(float deltaTime)
+        public virtual void Update()
         {
-            ElapsedTime += deltaTime;
+            ElapsedTime += Time.deltaTime;
             _currentState?.Update();
+        }
+
+        public void Dispose()
+        {
+            _currentState?.Dispose();
         }
     }
 }

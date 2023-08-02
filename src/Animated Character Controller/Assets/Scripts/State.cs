@@ -4,7 +4,12 @@ namespace DEPT.Unity
 {
     public abstract class State<TContext> : IDisposable
     {
-        public StateMachine<TContext> StateMachine { get; set; }
+        protected StateMachine<TContext> StateMachine { get; }
+
+        public State(StateMachine<TContext> stateMachine)
+        {
+            StateMachine = stateMachine;
+        }
 
         public virtual void Update()
         {
