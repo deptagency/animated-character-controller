@@ -17,6 +17,7 @@ namespace DEPT.Unity
         private bool _run = false;
 
         // Public variables
+        public Vector2 RawDirectionXY { get; private set; } = Vector2.zero;
         public Vector3 DirectionXZ { get; private set; } = Vector2.zero;
         public float SpeedXZ { get; private set; } = 0f;
         public Quaternion RotationY { get; private set; } = Quaternion.identity;
@@ -33,9 +34,9 @@ namespace DEPT.Unity
 
         public void OnMovement(InputValue value)
         {
-            var input = value.Get<Vector2>();
+            RawDirectionXY = value.Get<Vector2>();
 
-            _inputDirection = new Vector3(input.x, 0f, input.y);
+            _inputDirection = new Vector3(RawDirectionXY.x, 0f, RawDirectionXY.y);
         }
 
         public void OnJump(InputValue value)
